@@ -77,7 +77,7 @@ public class ActiveSubscriptionsCounter {
                         }
                         Logger.info("ActiveSubscriptionsCounter", "Found " + activePurchases.size() + " active subscriptions");
                     } else {
-                        Logger.error("ActiveSubscriptionsCounter", "Failed to query purchases: " + billingResult.getDebugMessage());
+                        Logger.warn("ActiveSubscriptionsCounter", "Failed to query purchases: " + billingResult.getDebugMessage());
                     }
                     billingLatch.countDown();
                 }
@@ -90,7 +90,7 @@ public class ActiveSubscriptionsCounter {
                 Logger.warn("ActiveSubscriptionsCounter", "Billing query timed out");
             }
         } catch (InterruptedException e) {
-            Logger.error("ActiveSubscriptionsCounter", "Interrupted while waiting for billing query: " + e.getMessage());
+            Logger.error("ActiveSubscriptionsCounter", "Interrupted while waiting for billing query", e);
             Thread.currentThread().interrupt();
         }
     }
@@ -103,7 +103,7 @@ public class ActiveSubscriptionsCounter {
                     Logger.info("ActiveSubscriptionsCounter", "Billing client connected successfully");
                     queryActiveSubscriptions();
                 } else {
-                    Logger.error("ActiveSubscriptionsCounter", "Billing setup failed: " + billingResult.getDebugMessage());
+                    Logger.warn("ActiveSubscriptionsCounter", "Billing setup failed: " + billingResult.getDebugMessage());
                 }
             }
 
