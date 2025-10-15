@@ -41,7 +41,6 @@ public class ActiveSubscriptionsCounter {
                         }
                     }
                 })
-                .enablePendingPurchases()
                 .build();
         } catch (Exception e) {
             Logger.error("ActiveSubscriptionsCounter", "Failed to initialize billing client", e);
