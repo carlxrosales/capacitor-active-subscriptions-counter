@@ -1,6 +1,6 @@
 {
   "name": "capacitor-active-subscriptions-counter",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "description": "A lightweight Capacitor plugin that counts active subscriptions from the device's Google Play or App Store account, independent of which user is logged into your app.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
