@@ -1,6 +1,6 @@
 # capacitor-active-subscriptions-counter
 
-A lightweight capacitor plugin to get the count of active subscriptions for iOS and Android.
+A lightweight Capacitor plugin that counts active subscriptions from the device's Google Play or App Store account, independent of which user is logged into your app.
 
 ## Install
 
