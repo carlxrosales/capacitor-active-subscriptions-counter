@@ -18,7 +18,6 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    namespace 'com.carlrosales.capacitor.subscriptions'
     compileSdk project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 35
     defaultConfig {
         minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 24
