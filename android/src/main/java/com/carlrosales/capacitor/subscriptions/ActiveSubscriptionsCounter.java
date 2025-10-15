@@ -40,7 +40,6 @@ public class ActiveSubscriptionsCounter {
                     }
                 }
             })
-            .enablePendingPurchases()
             .build();
     }
 
