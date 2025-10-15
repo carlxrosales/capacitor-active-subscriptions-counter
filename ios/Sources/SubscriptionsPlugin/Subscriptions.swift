@@ -21,7 +21,7 @@ import StoreKit
                             if let product = try? await Product.products(for: [transaction.productID]).first {
                                 if let subscription = product.subscription {
                                     let status = try await subscription.status
-                                    for case .verified(let renewalInfo) in status {
+                                    for renewalInfo in status {
                                         if renewalInfo.state == .subscribed || 
                                            renewalInfo.state == .inGracePeriod ||
                                            renewalInfo.state == .inBillingRetryPeriod {
