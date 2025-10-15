@@ -1,0 +1,51 @@
+# capacitor-active-subscriptions-counter
+
+A lightweight capacitor plugin to get the count of active subscriptions for iOS and Android.
+
+## Install
+
+```bash
+npm install capacitor-active-subscriptions-counter
+npx cap sync
+```
+
+## Compatibility
+
+- **iOS**: 15.0+ (uses StoreKit 2)
+- **Android**: API level 23+ (uses Google Play Billing Library 6.1.0)
+- **Web**: Not supported
+
+## Usage
+
+```typescript
+import { ActiveSubscriptionsCounter } from 'capacitor-active-subscriptions-counter';
+
+// Get the count of active subscriptions
+const { count } = await ActiveSubscriptionsCounter.getActiveSubscriptionsCount();
+console.log(`Active subscriptions: ${count}`);
+```
+
+## API
+
+<docgen-index>
+
+* [`getActiveSubscriptionsCount()`](#getactivesubscriptionscount)
+
+</docgen-index>
+
+<docgen-api>
+<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### getActiveSubscriptionsCount()
+
+```typescript
+getActiveSubscriptionsCount() => Promise<{ count: number; }>
+```
+
+Get the count of active subscriptions
+
+**Returns:** <code>Promise&lt;{ count: number; }&gt;</code>
+
+--------------------
+
+</docgen-api>
