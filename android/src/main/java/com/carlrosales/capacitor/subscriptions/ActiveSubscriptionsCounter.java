@@ -27,29 +27,48 @@ public class ActiveSubscriptionsCounter {
     }
 
     private void initializeBillingClient() {
-        billingClient = BillingClient.newBuilder(context)
-            .setListener(new PurchasesUpdatedListener() {
-                @Override
-                public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> purchases) {
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
-                        for (Purchase purchase : purchases) {
-                            if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                                activePurchases.add(purchase);
+        try {
+            billingClient = BillingClient.newBuilder(context)
+                .setListener(new PurchasesUpdatedListener() {
+                    @Override
+                    public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> purchases) {
+                        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
+                            for (Purchase purchase : purchases) {
+                                if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+                                    activePurchases.add(purchase);
+                                }
                             }
                         }
                     }
-                }
-            })
-            .build();
+                })
+                .enablePendingPurchases()
+                .build();
+        } catch (Exception e) {
+            Logger.error("ActiveSubscriptionsCounter", "Failed to initialize billing client", e);
+        }
     }
 
     public int getActiveSubscriptionsCount() {
         Logger.info("ActiveSubscriptionsCounter", "Getting active subscriptions count");
-        queryActiveSubscriptions();
-        return activePurchases.size();
+        try {
+            if (billingClient == null) {
+                Logger.warn("ActiveSubscriptionsCounter", "Billing client is null, reinitializing");
+                initializeBillingClient();
+            }
+            queryActiveSubscriptions();
+            return activePurchases.size();
+        } catch (Exception e) {
+            Logger.error("ActiveSubscriptionsCounter", "Error getting active subscriptions count", e);
+            return 0;
+        }
     }
     
     private void queryActiveSubscriptions() {
+        if (billingClient == null) {
+            Logger.warn("ActiveSubscriptionsCounter", "Billing client is null, cannot query subscriptions");
+            return;
+        }
+        
         if (!billingClient.isReady()) {
             Logger.warn("ActiveSubscriptionsCounter", "Billing client not ready, attempting to start connection");
             startBillingConnection();
@@ -95,6 +114,11 @@ public class ActiveSubscriptionsCounter {
     }
     
     private void startBillingConnection() {
+        if (billingClient == null) {
+            Logger.warn("ActiveSubscriptionsCounter", "Billing client is null, cannot start connection");
+            return;
+        }
+        
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(BillingResult billingResult) {
