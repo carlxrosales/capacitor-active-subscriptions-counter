@@ -12,7 +12,7 @@ npx cap sync
 ## Compatibility
 
 - **iOS**: 15.0+ (uses StoreKit 2)
-- **Android**: API level 24+ (uses Google Play Billing Library 6.1.0)
+- **Android**: API level 24+ (uses Google Play Billing Library 7.1.1)
 - **Web**: Not supported
 
 ## Usage
